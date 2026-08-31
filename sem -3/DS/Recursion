@@ -1,0 +1,77 @@
+
+#include <stdio.h>
+ 
+int factorial(int n) {
+    if (n == 0 || n == 1)
+        return 1;
+    return n * factorial(n - 1);
+}
+ 
+int fibonacci(int n) {
+    if (n == 0)
+        return 0;
+    if (n == 1)
+        return 1;
+    return fibonacci(n - 1) + fibonacci(n - 2);
+}
+ 
+int sumDigits(int n) {
+    if (n == 0)
+        return 0;
+    return (n % 10) + sumDigits(n / 10);
+}
+ 
+int power(int base, int exp) {
+    if (exp == 0)
+        return 1;
+    return base * power(base, exp - 1);
+}
+ 
+int gcd(int a, int b) {
+    if (b == 0)
+        return a;
+    return gcd(b, a % b);
+}
+ 
+int main() {
+    int choice, n, a, b;
+ 
+    while (1) {
+        printf("\n1. Factorial\n2. Fibonacci\n3. Sum of Digits\n4. Power\n5. GCD\n6. Exit\n");
+        printf("Enter choice: ");
+        scanf("%d", &choice);
+ 
+        switch (choice) {
+            case 1:
+                printf("Enter number: ");
+                scanf("%d", &n);
+                printf("Factorial: %d\n", factorial(n));
+                break;
+            case 2:
+                printf("Enter number: ");
+                scanf("%d", &n);
+                printf("Fibonacci: %d\n", fibonacci(n));
+                break;
+            case 3:
+                printf("Enter number: ");
+                scanf("%d", &n);
+                printf("Sum of digits: %d\n", sumDigits(n));
+                break;
+            case 4:
+                printf("Enter base and exponent: ");
+                scanf("%d %d", &a, &b);
+                printf("Power: %d\n", power(a, b));
+                break;
+            case 5:
+                printf("Enter two numbers: ");
+                scanf("%d %d", &a, &b);
+                printf("GCD: %d\n", gcd(a, b));
+                break;
+            case 6:
+                return 0;
+            default:
+                printf("Invalid choice\n");
+        }
+    }
+    return 0;
+}
