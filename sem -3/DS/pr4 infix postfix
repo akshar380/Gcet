@@ -1,0 +1,92 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <ctype.h>
+
+char *infix, *postfix, *stack;
+int *value;
+
+void convert()
+{
+    int top = -1, i, k = 0;
+
+    for(i = 0; infix[i] != '\0'; i++)
+    {
+        if(isalnum(infix[i]))
+            postfix[k++] = infix[i];
+
+        else if(infix[i] == '(')
+            stack[++top] = infix[i];
+
+        else if(infix[i] == ')')
+        {
+            while(stack[top] != '(')
+                postfix[k++] = stack[top--];
+            top--;
+        }
+
+        else
+        {
+            while(top >= 0 && stack[top] != '(')
+                postfix[k++] = stack[top--];
+
+            stack[++top] = infix[i];
+        }
+    }
+
+    while(top >= 0)
+        postfix[k++] = stack[top--];
+
+    postfix[k] = '\0';
+}
+
+void evaluate()
+{
+    int top = -1, i, a, b;
+
+    for(i = 0; postfix[i] != '\0'; i++)
+    {
+        if(isdigit(postfix[i]))
+            value[++top] = postfix[i] - '0';
+
+        else
+        {
+            b = value[top--];
+            a = value[top--];
+
+            if(postfix[i] == '+')
+                value[++top] = a + b;
+            else if(postfix[i] == '-')
+                value[++top] = a - b;
+            else if(postfix[i] == '*')
+                value[++top] = a * b;
+            else if(postfix[i] == '/')
+                value[++top] = a / b;
+        }
+    }
+
+    printf("Answer: %d", value[top]);
+}
+
+int main()
+{
+    infix = malloc(100 * sizeof(char));
+    postfix = malloc(100 * sizeof(char));
+    stack = malloc(100 * sizeof(char));
+    value = malloc(100 * sizeof(int));
+
+    printf("Enter infix expression: ");
+    scanf("%s", infix);
+
+    convert();
+
+    printf("Postfix: %s\n", postfix);
+
+    evaluate();
+
+    free(infix);
+    free(postfix);
+    free(stack);
+    free(value);
+
+    return 0;
+}
