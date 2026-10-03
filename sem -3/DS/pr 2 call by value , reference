@@ -1,0 +1,68 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+void reverse(int *a,int n)
+{
+    int i;
+    printf("Reverse: ");
+    for(i=n-1;i>=0;i--)
+        printf("%d ",*(a+i));
+    printf("\n");
+}
+
+void value(int x)
+{
+    x=x+10;
+    printf("Call by Value: %d\n",x);
+}
+
+void reference(int *x)
+{
+    *x=*x+10;
+    printf("Call by Reference: %d\n",*x);
+}
+
+int main()
+{
+    int *a,n,i,x,ch;
+
+    printf("Enter size: ");
+    scanf("%d",&n);
+
+    a=malloc(n*sizeof(int));
+
+    printf("Enter elements: ");
+    for(i=0;i<n;i++)
+        scanf("%d",&a[i]);
+
+    do
+    {
+        printf("\n1.Reverse  2.Call by Value  3.Call by Reference  4.Exit");
+        printf("\nEnter choice: ");
+        scanf("%d",&ch);
+
+        switch(ch)
+        {
+            case 1:
+                reverse(a,n);
+                break;
+            case 2:
+                printf("Enter value: ");
+                scanf("%d",&x);
+                value(x);
+                break;
+            case 3:
+                printf("Enter value: ");
+                scanf("%d",&x);
+                reference(&x);
+                break;
+            case 4:
+                break;
+            default:
+                printf("Wrong choice\n");
+        }
+    }while(ch!=4);
+
+    free(a);
+    return 0;
+}
